@@ -1,9 +1,10 @@
-from .extensions import db
+'''from .extensions import db
 
 class BaseModel(db.Model):
 
-    create_time = db.Column(db.string)
-    update_time = db.Column(db.string)
+    id = db.Column(db.Integer, primary_key = True)
+    create_time = db.Column(db.String)
+    update_time = db.Column(db.String)
 
 
     @staticmethod
@@ -16,4 +17,4 @@ class BaseModel(db.Model):
         db.session.commit()
 
     def update(self):
-        db.session.commit()
+        db.session.commit()'''
