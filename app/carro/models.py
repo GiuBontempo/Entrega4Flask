@@ -4,21 +4,21 @@ from flask import Blueprint
 
 carro_api = Blueprint("carro_api", __name__)
 
-class Carro:
+class Carro(db.Model):
 
     __tablename__ = "carro"
 
-    id = db.Column(db.Integer, primary_key = True)
-    create_time = db.Column(db.String)
-    update_time = db.Column(db.String)
-    modelo = db.Column(db.String)
-    cor = db.Column(db.String)
-    preco = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key = True, unique=True)
+    create_time = db.Column(db.Time)
+    update_time = db.Column(db.Time)
+    modelo = db.Column(db.String(20), nullable=False)
+    cor = db.Column(db.String(15), nullable=False)
+    preco = db.Column(db.Integer, nullable=False)
     ano = db.Column(db.Integer)
-    linha = db.Column(db.String)
+    linha = db.Column(db.String(20))
 
-    carrinho_id = db.Column(db.Integer, db.ForeignKey("carrinho"))
-    carrinho = db.relationship("carrinho", back_populates="carros")
+    carrinho_id = db.Column(db.Integer, db.ForeignKey("carrinho_de_compras.id"))
+    carrinho = db.relationship("carrinho_de_compras", back_populates="carros")
 
     def json(self):
         return{

@@ -1,12 +1,11 @@
-from sys import api_version
 from flask import Flask
-from .extensions import db, migrate
-from.config import Config
-from app.carrinho.models import carrinho_api
-from app.carro.models import carro_api
-from app.cupom.models import cupom_api
-from app.moto.models import moto_api
-from app.user.models import user_api
+from app.extensions import db, migrate
+from app.config import Config
+from app.carrinho_de_compras.models import *
+from app.carro.models import *
+from app.cupom.models import *
+from app.moto.models import *
+from app.user.models import *
 
 
 
@@ -17,7 +16,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    app.register_blueprint(carrinho_api)
+    app.register_blueprint(carrinho_de_compras_api)
     app.register_blueprint(carro_api)
     app.register_blueprint(cupom_api)
     app.register_blueprint(moto_api)

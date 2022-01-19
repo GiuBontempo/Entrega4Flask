@@ -4,22 +4,22 @@ from flask import Blueprint
 
 cupom_api = Blueprint("cupom_api", __name__)
 
-class Cupom:
+class Cupom(db.Model):
 
     __tablename__ = "cupom"
 
-    id = db.Column(db.Integer, primary_key = True)
-    create_time = db.Column(db.String)
-    update_time = db.Column(db.String)
-    porcentagem_ou_real = db.Column(db.String)
-    codigo = db.Column(db.String)
+    id = db.Column(db.Integer, primary_key = True, unique=True, nullable=False)
+    create_time = db.Column(db.Time)
+    update_time = db.Column(db.Time)
+    porcentagem = db.Column(db.Boolean) #Se for em porcentagem, True. Em valor real, False
+    codigo = db.Column(db.String(20), unique=True, nullable=False)
     valor = db.Column(db.Integer)
-    data_de_validade = db.Column(db.String)
+    valor_minimo = db.Column(db.Integer)
     valor_maximo = db.Column(db.Integer)
 
-    carrinho_id = db.Column(db.Integer, db.ForeignKey("carrinho"))
-    carrinho = db.relationship("carrinho", back_populates="cupom")
-    user_id = db.Column(db.Integer, db.ForeignKey("user"))
+    carrinho_id = db.Column(db.Integer, db.ForeignKey("carrinho_de_compras.id"))
+    carrinho = db.relationship("carrinho_de_compras", back_populates="cupom")
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.relationship("user", back_populates="cupons")
 
     def json(self):

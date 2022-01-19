@@ -4,21 +4,21 @@ from flask import Blueprint
 
 user_api = Blueprint("user_api", __name__)
 
-class User:
+class User(db.Model):
 
     __tablename__ = "user"
 
-    id = db.Column(db.Integer, primary_key = True)
-    create_time = db.Column(db.String)
-    update_time = db.Column(db.String)
-    cpf = db.Column(db.String(15), nullable = False)
-    nome = db.Column(db.String(70))
-    email = db.Column(db.String(70), unique = True, index = True)
+    id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
+    create_time = db.Column(db.Time)
+    update_time = db.Column(db.Time)
+    cpf = db.Column(db.String(20), nullable = False, unique=True)
+    nome = db.Column(db.String(40), nullable = False)
+    email = db.Column(db.String(70), unique = True)
     endereco = db.Column(db.String(70))
     numero = db.Column(db.String(5))
     complemento = db.Column(db.String(10))
 
-    carrinho = db.relationship("carrinho", back_populates="user", uselist=False)
+    carrinho = db.relationship("carrinho_de_compras", back_populates="user", uselist=False)
     cupons = db.relationship("cupom", back_populates="user")
 
     def json(self):
